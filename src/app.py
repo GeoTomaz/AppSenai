@@ -1,6 +1,7 @@
 import flet
-from flet import ThemeMode, OutlinedButton, Text, TextField, Column, CrossAxisAlignment
+from flet import ThemeMode, OutlinedButton, Text, TextField, Column, CrossAxisAlignment, Container, Colors, FontWeight
 from datetime import datetime
+
 
 
 def main(page: flet.Page):
@@ -47,16 +48,47 @@ def main(page: flet.Page):
     page.add (
         Column(
             [
-                input_nome,
-                input_sobrenome,
-                btn_salvar,
-                text,
-                input_numero,
-                btn_verificar,
-                text_par_impar,
-                input_idade,
-                btn_verificar_idade,
-                text_idade
+                Container(
+                    Column(
+                        [
+                            Text("Atividade 1", weight=FontWeight.BOLD),
+                            input_nome,
+                            input_sobrenome,
+                            btn_salvar,
+                            text
+                        ],
+                        horizontal_alignment=CrossAxisAlignment.CENTER,
+                    ),
+                    bgcolor=Colors.BLUE_200,
+                    padding=5,
+                ),
+                Container(
+                    Column(
+                        [
+                            Text("Atividade 2", weight=FontWeight.BOLD),
+                            input_numero,
+                            btn_verificar,
+                            text_par_impar,
+
+                        ],
+                        horizontal_alignment=CrossAxisAlignment.CENTER,
+                    ),
+                    bgcolor = Colors.BLUE_300,
+                    padding = 5,
+                ),
+                Container(
+                  Column(
+                      [
+                          Text("Atividade 3", weight=FontWeight.BOLD),
+                          input_idade,
+                          btn_verificar_idade,
+                          text_idade
+                      ],
+                      horizontal_alignment=CrossAxisAlignment.CENTER
+                  ),
+                    bgcolor=Colors.BLUE_400,
+                    padding=5,
+                ),
             ],
             width=400,
             horizontal_alignment=CrossAxisAlignment.CENTER
