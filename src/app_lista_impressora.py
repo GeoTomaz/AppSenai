@@ -6,7 +6,7 @@ from flet import ThemeMode, View, AppBar, Colors, Button, FloatingActionButton, 
     Column, Container, Row, Icon, ListTile, PopupMenuButton, PopupMenuItem, Dropdown, DropdownOption, CrossAxisAlignment
 from markdown_it.rules_block import lheading
 
-class Perfil:
+class Impressora:
     def __init__(self, modelo, cor, marca, valor):
         self.modelo = modelo
         self.cor = cor
@@ -41,12 +41,21 @@ def main(page: flet.Page):
                     trailing=PopupMenuButton(
                         icon=Icons.MORE_VERT,
                         items=[
-                            PopupMenuItem("Ver Detalhes", icon=Icons.REMOVE_RED_EYE, on_click=lambda: navegar ("/form_detalhes")),
+                            PopupMenuItem("Ver Detalhes", icon=Icons.REMOVE_RED_EYE, on_click=lambda _, impressora=item: ver_detalhes(impressora)),
                             PopupMenuItem("Excluir", icon=Icons.DELETE, on_click=lambda: excluir(item))
                         ]
                     )
                 )
             )
+
+    def ver_detalhes(impressora):
+        text_marca.value = impressora.marca
+        text_modelo.value = impressora.modelo
+        text_cor.value = impressora.cor
+        text_valor.value = impressora.valor
+
+        navegar("/form_detalhes")
+
     def excluir(item):
         lista_dados.remove(item)
         montar_lista_padrao()
@@ -84,15 +93,15 @@ def main(page: flet.Page):
             input_valor.error = "Campo obrigatorio"
 
         if not tem_erro:
-            pessoa = Perfil(modelo=modelo, cor=cor, valor=valor, marca=marca)
-            lista_dados.append(pessoa)
+            impressora = Impressora(modelo=modelo, cor=cor, valor=valor, marca=marca)
+            lista_dados.append(impressora)
 
             input_modelo.value = ""
             input_marca.value = ""
             input_cor.value = ""
             input_valor.value = ""
 
-            navegar(route="/lista_dados")
+            navegar(route="/lista_d1ados")
 
 
 
@@ -144,24 +153,24 @@ def main(page: flet.Page):
                         Container(
 
                             Column([
-                                text,
+                                text_modelo,
                                 Row([
-                                    Icon(Icons.COLLECTIONS_BOOKMARK_ROUNDED, color=Colors.PURPLE, size=20),
+                                    Icon(Icons.COLLECTIONS_BOOKMARK_ROUNDED, color=Colors.BLACK, size=20),
                                     text_marca,
                                 ]),
                                 Row([
-                                    Icon(Icons.COLOR_LENS_ROUNDED, color=Colors.PURPLE, size=20),
+                                    Icon(Icons.COLOR_LENS_ROUNDED, color=Colors.BLACK, size=20),
                                     text_cor,
                                 ]),
                                 Row([
-                                    Icon(Icons.MONEY, color=Colors.PURPLE, size=20),
+                                    Icon(Icons.MONEY, color=Colors.BLACK, size=20),
                                     text_valor,
                                 ],
                                 ),
                             ],
                             horizontal_alignment = CrossAxisAlignment.CENTER,
                             ),
-                            bgcolor=Colors.BLUE,
+                            bgcolor=Colors.PURPLE,
                             border_radius=10,
                             padding=10,
                         ),
@@ -177,8 +186,8 @@ def main(page: flet.Page):
             await page.push_route(top_view.route)
 
     # Componentes
-    text = Text()
     text_marca = Text()
+    text_modelo = Text()
     text_cor = Text()
     text_valor = Text()
     input_modelo = TextField(label="Modelo", on_submit=salvar_dados)
